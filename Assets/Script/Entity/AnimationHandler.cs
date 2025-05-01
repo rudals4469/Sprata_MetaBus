@@ -5,7 +5,6 @@ using UnityEngine;
 public class AnimationHandler : MonoBehaviour
 {
     private static readonly int IsMoving = Animator.StringToHash("isMove");
-    private static readonly int IsDamage = Animator.StringToHash("isDamage");
 
     protected Animator animator;
     protected virtual void Awake()
@@ -16,14 +15,5 @@ public class AnimationHandler : MonoBehaviour
     public void Move(Vector2 obj)
     {
         animator.SetBool(IsMoving, obj.magnitude > 0.5f);
-    }
-
-    public void Damagge()
-    {
-        animator.SetBool(IsDamage, true);
-    }
-    public void InvincibilityEnd()
-    {
-        animator.SetBool(IsDamage, false);
     }
 }

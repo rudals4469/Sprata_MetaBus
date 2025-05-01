@@ -17,9 +17,6 @@ public class BaseController : MonoBehaviour
     protected Vector2 lookDirection = Vector2.zero; // 바라보는 방향
     public Vector2 LookDirection { get { return lookDirection; } }
 
-    private Vector2 knockback = Vector2.zero; // 넉백 방향
-    private float knockbackDuration = 0f; // 넉백 시간
-
     protected AnimationHandler animationHandler;
 
     protected virtual void Awake()
@@ -41,7 +38,6 @@ public class BaseController : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         Movement(movementDirection);
-        if(knockbackDuration > 0f) knockbackDuration -= Time.deltaTime;
     }
 
     protected virtual void HandleAction()
@@ -52,11 +48,6 @@ public class BaseController : MonoBehaviour
     private void Movement(Vector2 direction)
     {
         direction = direction * 5;
-        if (knockbackDuration > 0.0f)
-        {
-            direction *= 0.2f;
-            direction += knockback;
-        }
 
         _rigidbody.velocity = direction;
         animationHandler.Move(direction);
@@ -73,12 +64,6 @@ public class BaseController : MonoBehaviour
 
             weaponPivot.rotation = Quaternion.Euler(0, 0, rotz);
         }
-    }
-
-    public void ApplyKnokeback(Transform other, float power, float duration)
-    {
-        knockbackDuration = duration;
-        knockback= -(other.position - transform.position).normalized * power;
     }
 
 }
