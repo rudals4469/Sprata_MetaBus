@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
-    public Transform target;
-    public float smoothSpeed = 5;
-    public Vector2 minBounds;
-    public Vector2 maxBounds;
 
+    [SerializeField] private Transform target;
     private Vector3 offSet;
+    private float smoothSpeed = 5;
 
-    private void Start()
+    [SerializeField] private Vector2 minBounds;
+    [SerializeField] private Vector2 maxBounds;
+
+
+    public void Start()
     {
         offSet = transform.position - target.position;
     }

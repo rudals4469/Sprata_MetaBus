@@ -22,7 +22,6 @@ public class MiniGameStart : MonoBehaviour
         {
             if (other.CompareTag("Player"))
             {
-
                 interactionPopup.SetActive(false);
             }
         }

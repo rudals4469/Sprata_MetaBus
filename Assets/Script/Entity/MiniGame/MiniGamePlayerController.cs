@@ -16,8 +16,11 @@ public class MiniGamePlayerController : MonoBehaviour
 
     bool isFlap = false;
 
+    GameManager gameManager = null;
+
     private void Start()
     {
+        gameManager = GameManager.Instance;
         animator = GetComponentInChildren<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
 
@@ -25,19 +28,15 @@ public class MiniGamePlayerController : MonoBehaviour
         if (rigidbody == null) return;
 
     }
-    private void Update()
+   private void Update()
     {
-        if(isDead)
+        if (isDead)
         {
-            if(deathCooldown > 0)
-            {
-                deathCooldown -= Time.deltaTime;
-            }
+            return;
         }
-
         else
         {
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             {
                 isFlap = true;
             }
@@ -70,5 +69,6 @@ public class MiniGamePlayerController : MonoBehaviour
         animator.SetInteger("isDie", 1);
         isDead = true;
         deathCooldown = 1f;
+        gameManager.GameOver();
     }
 }
