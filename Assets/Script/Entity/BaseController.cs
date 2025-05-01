@@ -1,0 +1,81 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UIElements;
+
+public class BaseController : MonoBehaviour
+{
+    protected Rigidbody2D _rigidbody;
+
+    [SerializeField] private SpriteRenderer charcterRenderer;
+    [SerializeField] private Transform weaponPivot;
+
+    protected Vector2 movementDirection = Vector2.zero; // 이동 방향
+
+    public Vector2 MovementDirection { get { return movementDirection; } }
+
+    protected Vector2 lookDirection = Vector2.zero; // 바라보는 방향
+    public Vector2 LookDirection { get { return lookDirection; } }
+
+    private Vector2 knockback = Vector2.zero; // 넉백 방향
+    private float knockbackDuration = 0f; // 넉백 시간
+
+
+    protected virtual void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+    }
+    protected virtual void Start()
+    {
+
+    }
+
+    protected virtual void Update()
+    {
+        HandleAction();
+        Rotate(lookDirection);
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        Movement(movementDirection);
+        if(knockbackDuration > 0f) knockbackDuration -= Time.deltaTime;
+    }
+
+    protected virtual void HandleAction()
+    {
+
+    }
+
+    private void Movement(Vector2 direction)
+    {
+        direction = direction * 5;
+        if (knockbackDuration > 0.0f)
+        {
+            direction *= 0.2f;
+            direction += knockback;
+        }
+
+        _rigidbody.velocity = direction;
+    }
+    private void Rotate(Vector2 direction)
+    {
+        float rotz = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        bool isLeft = Mathf.Abs(rotz) > 90;
+
+        charcterRenderer.flipX = isLeft;
+
+        if (weaponPivot != null)
+        {
+
+            weaponPivot.rotation = Quaternion.Euler(0, 0, rotz);
+        }
+    }
+
+    public void ApplyKnokeback(Transform other, float power, float duration)
+    {
+        knockbackDuration = duration;
+        knockback= -(other.position - transform.position).normalized * power;
+    }
+
+}
