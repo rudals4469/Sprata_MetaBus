@@ -45,7 +45,7 @@ public class TheStack : MonoBehaviour
     private bool isGameOver = true;
     private void Awake()
     {
-        Screen.SetResolution(1080, 1920, true);
+        Screen.SetResolution(900, 1600, false);
     }
     void Start()
     {

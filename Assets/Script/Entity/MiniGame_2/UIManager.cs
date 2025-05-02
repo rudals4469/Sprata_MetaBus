@@ -61,7 +61,7 @@ public class UIManager : MonoBehaviour
 
     public void OnClickExit()
     {
-        Screen.SetResolution(1920, 1080, true);
+        Screen.SetResolution(1600, 900, false);
         SceneManager.LoadScene("MainScene");
     }
     public void UpdateScore()
