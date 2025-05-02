@@ -40,9 +40,11 @@ public class Obstacle : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         MiniGamePlayerController player = other.GetComponent<MiniGamePlayerController>();
-        if (player != null)
+        if (player != null && player.isDead == false)
         {
+
             gameManager.AddScore(1);
+            ScoreManager.instance.AddScore(1);
         }
     }
 }

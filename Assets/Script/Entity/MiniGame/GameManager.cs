@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
 
     MiniGameUIManager uiManager;
 
+    private const string BestScoreKey = "BestScore";
+
     public MiniGameUIManager UIManager
     {
         get { return uiManager; } 
@@ -20,6 +22,7 @@ public class GameManager : MonoBehaviour
     }
 
     private int currentScore = 0;
+    private int bestScore = 0;
 
     private void Awake()
     {
@@ -29,25 +32,54 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        uiManager.updateScore(0);
+        bestScore = PlayerPrefs.GetInt(BestScoreKey, 0);
+        uiManager.UpdateScore(currentScore);
+        BestScore();
+        Time.timeScale = 0;
+
     }
     public void GameOver()
     {
+        ScoreManager.instance.currentScore = 0;
         Debug.Log("Game Over");
         uiManager.SetRestart();
 
     }
 
-    public void RestartGame()
+    public void GameStart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        uiManager.Ready();
+        Time.timeScale = 1;
+    }
+
+    public void EndGane()
+    {
+        
+        ScoreManager.instance.SaveHighScore();
+        PlayerPrefs.SetInt("LastScore",ScoreManager.instance.currentScore);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("MainScene");
+
     }
 
     public void AddScore(int score)
     {
         currentScore += score;
-        uiManager.updateScore(currentScore);
+
+        if (currentScore >= bestScore)
+        {
+            bestScore = currentScore;
+        }
+
+        uiManager.UpdateScore(currentScore);
+        BestScore();
         Debug.Log("Score: " + currentScore);
+    }
+
+    public void BestScore()
+    {
+        uiManager.BestScore(bestScore);
+        PlayerPrefs.SetInt(BestScoreKey, bestScore);
     }
 
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MiniGamePlayerController : MonoBehaviour
 {
@@ -11,10 +12,11 @@ public class MiniGamePlayerController : MonoBehaviour
 
     private float flpaForce = 6f;
     private float forwardSpeed = 3f;
-    private bool isDead = false;
+    public bool isDead = false;
     float deathCooldown = 0f;
 
     bool isFlap = false;
+    bool isStart = false;
 
     GameManager gameManager = null;
 
@@ -30,17 +32,26 @@ public class MiniGamePlayerController : MonoBehaviour
     }
    private void Update()
     {
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && isStart == false)
+        {
+            gameManager.GameStart();
+            isStart = true;
+        }
         if (isDead)
         {
             return;
         }
         else
         {
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && isStart == true )
             {
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
                 isFlap = true;
             }
         }
+    
+       
     }
 
     private void FixedUpdate()
