@@ -13,16 +13,15 @@ public class MiniGamePlayerController : MonoBehaviour
     private float flpaForce = 6f;
     private float forwardSpeed = 3f;
     public bool isDead = false;
-    float deathCooldown = 0f;
 
     bool isFlap = false;
     bool isStart = false;
 
-    GameManager gameManager = null;
+    MiniGame1Manager gameManager = null;
 
     private void Start()
     {
-        gameManager = GameManager.Instance;
+        gameManager = MiniGame1Manager.Instance;
         animator = GetComponentInChildren<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
 
@@ -79,7 +78,6 @@ public class MiniGamePlayerController : MonoBehaviour
 
         animator.SetInteger("isDie", 1);
         isDead = true;
-        deathCooldown = 1f;
         gameManager.GameOver();
     }
 }

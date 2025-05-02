@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class MiniGame1Manager : MonoBehaviour
 {
-    static GameManager gameManager;
+    static MiniGame1Manager gameManager;
 
     MiniGameUIManager uiManager;
 
@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     {
         get { return uiManager; } 
     }
-    public static GameManager Instance
+    public static MiniGame1Manager Instance
     {
         get { return gameManager; }
     }
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver()
     {
-        ScoreManager.instance.currentScore = 0;
+        
         Debug.Log("Game Over");
         uiManager.SetRestart();
 
@@ -54,10 +54,6 @@ public class GameManager : MonoBehaviour
 
     public void EndGane()
     {
-        
-        ScoreManager.instance.SaveHighScore();
-        PlayerPrefs.SetInt("LastScore",ScoreManager.instance.currentScore);
-        PlayerPrefs.Save();
         SceneManager.LoadScene("MainScene");
 
     }

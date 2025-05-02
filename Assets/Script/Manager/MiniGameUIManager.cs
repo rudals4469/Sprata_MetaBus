@@ -18,7 +18,7 @@ public class MiniGameUIManager : MonoBehaviour
 
     public Image readyUI;
 
-    public GameManager gameManager;
+    public MiniGame1Manager gameManager;
 
 
     private void Awake()
