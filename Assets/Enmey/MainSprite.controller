@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isBool
+    m_ConditionEvent: isSting
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1908010675666953360}
@@ -34,7 +34,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isBool
+    m_ConditionEvent: isSting
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2419811106972141257}
@@ -59,7 +59,7 @@ AnimatorController:
   m_Name: MainSprite
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: isBool
+  - m_Name: isSting
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
