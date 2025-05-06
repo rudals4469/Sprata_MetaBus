@@ -5,18 +5,20 @@ using UnityEngine;
 public class EnemyHit : MonoBehaviour
 {
     public  Animator animatior;
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (collision.CompareTag("sting"))
+        
+        if (other.CompareTag("sting"))
         {
-            animatior.SetBool("isSting", true);
+            animatior.SetInteger("isHit", 1);
             Invoke("OffSting", 1f);
 
         }
     }
 
+
     public void OffSting()
     {
-        animatior.SetBool("isSting", false);
+        animatior.SetInteger("isHit", 0);
     }
 }

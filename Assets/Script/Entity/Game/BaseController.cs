@@ -19,26 +19,43 @@ public class BaseController : MonoBehaviour
     public Vector2 LookDirection { get { return lookDirection; } }
 
 
+    [SerializeField] public WeaponHandler WeaponPrefab;
+    protected WeaponHandler weaponHandler;
+
+    protected bool isAttacking;
+    private float timeSinceLastAttack = float.MaxValue;
 
     protected virtual void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
         animationHandler = GetComponent<AnimationHandler>();
-    }
-    protected virtual void Start()
-    {
 
+        if (WeaponPrefab != null)
+        {
+            weaponHandler = Instantiate(WeaponPrefab, weaponPivot);
+        }
+        else
+            weaponHandler = GetComponentInChildren<WeaponHandler>();
     }
 
     protected virtual void Update()
     {
         HandleAction();
         Rotate(lookDirection);
+        HandleAttackDelay();
     }
+
+
 
     protected virtual void FixedUpdate()
     {
         Movement(movementDirection);
+    }
+
+
+    protected virtual void Start()
+    {
+
     }
 
     protected virtual void HandleAction()
@@ -65,6 +82,29 @@ public class BaseController : MonoBehaviour
 
             weaponPivot.rotation = Quaternion.Euler(0, 0, rotz);
         }
+    }
+
+    private void HandleAttackDelay()
+    {
+        if (weaponHandler == null)
+            return;
+
+        if (timeSinceLastAttack <= weaponHandler.Delay)
+        {
+            timeSinceLastAttack += Time.deltaTime;
+        }
+
+        if (isAttacking && timeSinceLastAttack > weaponHandler.Delay)
+        {
+            timeSinceLastAttack = 0;
+            Attack();
+        }
+    }
+
+    protected virtual void Attack()
+    {
+        if (lookDirection != Vector2.zero)
+            weaponHandler?.Attack();
     }
 
 }

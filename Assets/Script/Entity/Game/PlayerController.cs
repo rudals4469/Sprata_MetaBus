@@ -6,7 +6,8 @@ public class PlayerController : BaseController
 {
     private Camera camera;
 
-    [SerializeField] private GameObject sting;
+    [SerializeField] private Animator animator;
+
     protected override void Start()
     {
         base.Start();
@@ -32,16 +33,7 @@ public class PlayerController : BaseController
             lookDirection = lookDirection.normalized;
         }
 
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            sting.SetActive(true);
-            Invoke("OffSting", 0.2f);
-        }
-    }
+        isAttacking = Input.GetKeyDown(KeyCode.Z);
 
-    public void OffSting()
-    {
-        sting.SetActive(false);
-    }
-
-}
+    }   
+ }
