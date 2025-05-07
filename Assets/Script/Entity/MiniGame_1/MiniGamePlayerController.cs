@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MiniGamePlayerController : MonoBehaviour
 {
@@ -11,13 +12,16 @@ public class MiniGamePlayerController : MonoBehaviour
 
     private float flpaForce = 6f;
     private float forwardSpeed = 3f;
-    private bool isDead = false;
-    float deathCooldown = 0f;
+    public bool isDead = false;
 
     bool isFlap = false;
+    bool isStart = false;
+
+    MiniGame1Manager gameManager = null;
 
     private void Start()
     {
+        gameManager = MiniGame1Manager.Instance;
         animator = GetComponentInChildren<Animator>();
         rigidbody = GetComponent<Rigidbody2D>();
 
@@ -25,23 +29,28 @@ public class MiniGamePlayerController : MonoBehaviour
         if (rigidbody == null) return;
 
     }
-    private void Update()
+   private void Update()
     {
-        if(isDead)
+        if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && isStart == false)
         {
-            if(deathCooldown > 0)
-            {
-                deathCooldown -= Time.deltaTime;
-            }
+            gameManager.GameStart();
+            isStart = true;
         }
-
+        if (isDead)
+        {
+            return;
+        }
         else
         {
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0)) && isStart == true )
             {
+                if (EventSystem.current.IsPointerOverGameObject())
+                    return;
                 isFlap = true;
             }
         }
+    
+       
     }
 
     private void FixedUpdate()
@@ -69,6 +78,6 @@ public class MiniGamePlayerController : MonoBehaviour
 
         animator.SetInteger("isDie", 1);
         isDead = true;
-        deathCooldown = 1f;
+        gameManager.GameOver();
     }
 }

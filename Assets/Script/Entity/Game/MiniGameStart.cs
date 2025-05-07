@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,14 +17,15 @@ public class MiniGameStart : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (SceneManager.GetActiveScene().buildIndex == 0)
-        {
             if (other.CompareTag("Player"))
             {
+                if(interactionPopup != null)
+                {
 
-                interactionPopup.SetActive(false);
+                    interactionPopup.SetActive(false);
+                }
             }
-        }
         
     }
 }
+//if (SceneManager.GetActiveScene().buildIndex == 0)

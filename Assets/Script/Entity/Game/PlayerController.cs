@@ -6,6 +6,8 @@ public class PlayerController : BaseController
 {
     private Camera camera;
 
+    [SerializeField] private Animator animator;
+
     protected override void Start()
     {
         base.Start();
@@ -30,6 +32,8 @@ public class PlayerController : BaseController
         {
             lookDirection = lookDirection.normalized;
         }
-    }
 
-}
+        isAttacking = Input.GetKeyDown(KeyCode.Z);
+
+    }   
+ }
